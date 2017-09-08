@@ -1,0 +1,27 @@
+{
+    "author": "Demo Company",
+    "dependencies": {},
+    "keywords": [],
+    "name": "usdt_btc_watch",
+    "pebble": {
+        "displayName": "USDT_BTC_WATCHER_JS",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "rocky",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "chalk",
+            "diorite",
+            "emery"
+        ],
+        "uuid": "09e25be0-4a97-4de0-a3bb-532782016e36",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
