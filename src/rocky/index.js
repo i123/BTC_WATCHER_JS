@@ -4,6 +4,7 @@ var rocky = require('rocky');
 
 // Global object to store weather data
 var currency;
+var yahooccy;
 
 /*
 rocky.on('hourchange', function(event) {
@@ -38,19 +39,45 @@ rocky.on('message', function(event) {
     // Request a redraw so we see the information
     rocky.requestDraw();
   }
+
+  if (message.YahooCCY) {
+    // Save the weather data
+    yahooccy = message.YahooCCY;
+    
+    // Request a redraw so we see the information
+    rocky.requestDraw();
+  }
 });
 
 rocky.on('draw', function(event) {
   // Get the CanvasRenderingContext2D object
   var ctx = event.context;
-
+  var ccy = 0;
   // Clear the screen
   ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 
   // Draw the conditions (before clock hands, so it's drawn underneath them)
   if (currency) {
     drawCurrency(ctx, currency);
+		console.log('currency; ' + currency.USDT_BTC.LAST);
   }
+	if (yahooccy) {
+    drawYahooCCY(ctx, yahooccy);
+		console.log('yahooccy; ' + yahooccy.BTC_USD.LAST);
+  }
+	if (currency || yahooccy) {
+		console.log('polo- yahoo');
+		ccy =  parseFloat(currency.USDT_BTC.LAST)- parseFloat(yahooccy.BTC_USD.LAST) ;
+ 		ccy = ccy/parseFloat(yahooccy.BTC_USD.LAST)*100;
+		console.log('ccy; ' + ccy);
+	  ccy = floatFormat(ccy,2);
+  	ctx.fillStyle = 'white';
+    ctx.textAlign = 'left';
+    ctx.font = '14px Gothic'; //24 ,18 
+		ctx.fillText(' ' + ccy +'%',0,154);
+
+	}
+	
   // Determine the width and height of the display
   var w = ctx.canvas.unobstructedWidth;
   var h = ctx.canvas.unobstructedHeight;
@@ -123,18 +150,34 @@ function drawCurrency(ctx, Currency) {
   // Draw the text, top center
   ctx.fillStyle = 'white';
   ctx.textAlign = 'right';
-  ctx.font = '28px Gothic';
+  ctx.font = '28px Gothic'; //24 ,18 
 
-  ctx.fillText('' + floatFormat(Currency.USDT_LTC.LAST, 2) , 142,78);
-  ctx.fillText('' + floatFormat(Currency.USDT_XMR.LAST, 2) , 142,98);
-  ctx.fillText('' + floatFormat(Currency.USDT_BCH.LAST, 2) , 142,118);
+  // ctx.fillText('' + floatFormat(Currency.USDT_LTC.LAST, 2) , 142,78);
+  // ctx.fillText('' + floatFormat(Currency.USDT_XMR.LAST, 2) , 142,98);
+  // ctx.fillText('' + floatFormat(Currency.USDT_BCH.LAST, 2) , 142,118);
   ctx.fillText('' + floatFormat(Currency.USDT_BTC.LAST, 2) , 142,138);
 
   ctx.fillStyle = '#00AA55';
   ctx.textAlign = 'left';
   ctx.font = '14px Gothic';
-  ctx.fillText('LTC, ' + volFormat(Currency.USDT_LTC.Volume), 0,83);
-  ctx.fillText('XMR, ' + volFormat(Currency.USDT_XMR.Volume), 0,103);
-  ctx.fillText('BCH, ' + volFormat(Currency.USDT_BCH.Volume), 0,123);
-  ctx.fillText('BTC, ' + volFormat(Currency.USDT_BTC.Volume), 0,143);
+  // ctx.fillText('LTC, ' + volFormat(Currency.USDT_LTC.Volume), 0,83);
+  // ctx.fillText('XMR, ' + volFormat(Currency.USDT_XMR.Volume), 0,103);
+  // ctx.fillText('BCH, ' + volFormat(Currency.USDT_BCH.Volume), 0,123);
+  ctx.fillText('USDT, ' + volFormat(Currency.USDT_BTC.Volume), 0,143);
+}
+
+function drawYahooCCY(ctx, Currency) {
+  // Draw the text, top center
+  ctx.fillStyle = 'white';
+  ctx.textAlign = 'right';
+  ctx.font = '28px Gothic';
+
+  ctx.fillText('' + floatFormat(Currency.USD_JPY.LAST, 2) , 142,98);
+  ctx.fillText('' + floatFormat(Currency.BTC_USD.LAST, 2) , 142,118);
+
+  ctx.fillStyle = '#FF0000';
+  ctx.textAlign = 'left';
+  ctx.font = '14px Gothic';
+  ctx.fillText('USDJPY ', 0, 103);
+  ctx.fillText('USD ', 0, 123);
 }

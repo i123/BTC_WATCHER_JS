@@ -28,6 +28,21 @@ Pebble.on('message', function(event) {
         }
       });
     });
+    url = 'https://query.yahooapis.com/v1/public/yql?q=';
+		url+= 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDJPY,BTCUSD,EURJPY%22)';
+		url+= '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
+    request(url, 'GET', function(respText) {
+      var json = JSON.parse(respText);
+			console.log(json.query.results.rate[0].Rate);
+      Pebble.postMessage({
+        'YahooCCY': {
+          'USD_JPY':{
+            'LAST': json.query.results.rate[0].Rate},
+          'BTC_USD':{
+            'LAST': json.query.results.rate[1].Rate},
+        }
+      });
+    });
   }
 });
 
