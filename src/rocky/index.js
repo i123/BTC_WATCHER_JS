@@ -94,9 +94,8 @@ rocky.on('draw', function(event) {
   // Center align the text
   ctx.textAlign = 'center';
   
-  var dateString = d.toLocaleTimeString(undefined, {hour: '2-digit'});
-  dateString += ':' + d.toLocaleTimeString(undefined, {minute: '2-digit'});
- 
+	var dateString = zeroFill(d.getHours(), 2);
+	dateString += ':' + zeroFill(d.getMinutes(), 2);
   // Display the time, in the middle of the screen
   ctx.fillText(dateString, w / 2, h / 2-50, w);
   
@@ -180,4 +179,8 @@ function drawYahooCCY(ctx, Currency) {
   ctx.font = '14px Gothic';
   ctx.fillText('USDJPY ', 0, 103);
   ctx.fillText('USD ', 0, 123);
+}
+function zeroFill(num, fill) {
+  var padd = "0000000000";
+  return (padd + num).slice(-fill);
 }
