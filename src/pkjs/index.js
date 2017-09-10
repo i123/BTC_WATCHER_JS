@@ -33,7 +33,7 @@ Pebble.on('message', function(event) {
 		url+= '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
     request(url, 'GET', function(respText) {
       var json = JSON.parse(respText);
-			console.log(json.query.results.rate[0].Rate);
+//			console.log(json.query.results.rate[0].Rate);
       Pebble.postMessage({
         'YahooCCY': {
           'USD_JPY':{

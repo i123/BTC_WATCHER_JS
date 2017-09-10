@@ -64,8 +64,10 @@ rocky.on('draw', function(event) {
 	if (yahooccy) {
     drawYahooCCY(ctx, yahooccy);
 		console.log('yahooccy; ' + yahooccy.BTC_USD.LAST);
+		
+		console.log('yahoousd; ' + yahooccy.USD_JPY.LAST);
   }
-	if (currency || yahooccy) {
+	if (currency && yahooccy) {
 		console.log('polo- yahoo');
 		ccy =  parseFloat(currency.USDT_BTC.LAST)- parseFloat(yahooccy.BTC_USD.LAST) ;
  		ccy = ccy/parseFloat(yahooccy.BTC_USD.LAST)*100;
@@ -77,7 +79,7 @@ rocky.on('draw', function(event) {
 		ctx.fillText(' ' + ccy +'%',0,154);
 
 	}
-	
+	console.log('tokei');
   // Determine the width and height of the display
   var w = ctx.canvas.unobstructedWidth;
   var h = ctx.canvas.unobstructedHeight;
@@ -106,7 +108,7 @@ rocky.on('draw', function(event) {
   
   // Center align the text
   ctx.textAlign = 'left';
-  
+  console.log('tokei-end');
   var weekday = new Array(7);
   weekday[0] = "SUN";
   weekday[1] = "MON";
@@ -171,14 +173,14 @@ function drawYahooCCY(ctx, Currency) {
   ctx.textAlign = 'right';
   ctx.font = '28px Gothic';
 
-  ctx.fillText('' + floatFormat(Currency.USD_JPY.LAST, 2) , 142,98);
-  ctx.fillText('' + floatFormat(Currency.BTC_USD.LAST, 2) , 142,118);
+  ctx.fillText('' + floatFormat(Currency.USD_JPY.LAST, 2) , 142,118);
+  // ctx.fillText('' + floatFormat(Currency.BTC_USD.LAST, 2) , 142,118);
 
   ctx.fillStyle = '#FF0000';
   ctx.textAlign = 'left';
   ctx.font = '14px Gothic';
-  ctx.fillText('USDJPY ', 0, 103);
-  ctx.fillText('USD ', 0, 123);
+  ctx.fillText('USDJPY ', 0, 123);
+  // ctx.fillText('USD ', 0, 123);
 }
 function zeroFill(num, fill) {
   var padd = "0000000000";
